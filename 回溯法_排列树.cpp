@@ -7,7 +7,7 @@ vector<int> x; // 元素集合
 int n;         // 元素个数
 int sum;       // 结果个数
 
-// 无重复元素的全排列 n!种情况
+// 无重复元素的全排列 n!种情况（生成的结果并非字典序排列）
 void backtrack1(int t)
 {
     // 到达叶子结点，产生一种排列
@@ -36,7 +36,7 @@ void backtrack1(int t)
 // 无重复元素的全排列 n!种情况 输出按字典序排序 引入visited数组标记是否已使用
 void backtrack1(int t, vector<bool> &visited)
 {
-    static vector<int> des(x);
+    static vector<int> des(x);  //原待排列数组
     // 到达叶子结点，产生一种排列
     if (t > n)
     {

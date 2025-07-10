@@ -10,11 +10,11 @@ using namespace std;
 struct Node
 {
     char ch;
-    int freq;
+    double freq;
     Node *left, *right;
-    Node(char c, int f)
+    Node(char c, double f)
         : ch(c), freq(f), left(nullptr), right(nullptr) {}
-    Node(int f, Node *l, Node *r)
+    Node(double f, Node *l, Node *r)
         : ch('\0'), freq(f), left(l), right(r) {}
 };
 
@@ -32,12 +32,18 @@ public:
 void generateCodes(Node *root, const string &code, unordered_map<char, string> &huffmanCode)
 {
     if (!root)
-        return;
+        return; // 如果节点为空，直接返回
+
+    // 如果是叶子节点且包含有效字符
     if (!root->left && !root->right && root->ch != '\0')
     {
-        huffmanCode[root->ch] = code;
+        huffmanCode[root->ch] = code; // 保存字符对应的哈夫曼编码
     }
+
+    // 递归遍历左子树，路径加'0'
     generateCodes(root->left, code + "0", huffmanCode);
+
+    // 递归遍历右子树，路径加'1'
     generateCodes(root->right, code + "1", huffmanCode);
 }
 
@@ -46,8 +52,8 @@ int main()
     int n;
     cout << "请输入字符个数: ";
     cin >> n;
-    vector<pair<char, int>> input(n);
-    cout << "请输入字符和权值（如 a 5）:" << endl;
+    vector<pair<char, double>> input(n);
+    cout << "请输入字符和权值:";
     for (int i = 0; i < n; ++i)
     {
         cin >> input[i].first >> input[i].second;
@@ -55,6 +61,17 @@ int main()
 
     // 构建最小堆
     priority_queue<Node *, vector<Node *>, Compare> minHeap;
+
+    // 比较器：最小堆
+    class Compare
+    {
+    public:
+        bool operator()(Node *a, Node *b)
+        {
+            return a->freq > b->freq;
+        }
+    };
+
     for (auto &p : input)
     {
         minHeap.push(new Node(p.first, p.second));

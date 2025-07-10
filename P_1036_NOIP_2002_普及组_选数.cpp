@@ -42,6 +42,7 @@ vector<int> path;
 //     return is_prime;
 // }
 
+//埃拉托色尼筛法
 bool is_prime(int num)
 {
     if (num < 2)
