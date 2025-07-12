@@ -54,6 +54,7 @@ int main()
     //         cout << v[i][j] << " ";
     //     cout << endl;
     // }
+    
     cout << v[mount][time] << endl;
     return 0;
 }
